@@ -1,0 +1,80 @@
+import React from 'react'
+import { FaArrowRightLong } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png'
+
+
+function Login() {
+  return (
+    <section>
+      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
+        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
+          <div className="mb-2 flex justify-center">
+            <img className='h-[180px]' src={logo} alt="logo" />
+          </div>
+          <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">
+            Sign in to your account
+          </h2>
+          
+          <p className="mt-2 text-center text-sm text-gray-600 ">
+            Don&apos;t have an account?{' '}
+            <Link
+              to={`/signup`}
+            >
+            <span className="font-semibold text-black transition-all duration-200 hover:underline dark:text-lime-300">
+            Create a free account
+            </span>
+            </Link>
+              
+            
+          </p>
+          
+          <form action="#" method="POST" className="mt-8">
+            <div className="space-y-5">
+              <div>
+                <label htmlFor="" className="text-base font-medium text-gray-900 dark:text-white ">
+                  {' '}
+                  Email address{' '}
+                </label>
+                <div className="mt-2">
+                  <input
+                    className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    type="email"
+                    placeholder="Email"
+                  ></input>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between">
+                  <label htmlFor="" className="text-base font-medium text-gray-900 dark:text-white">
+                    {' '}
+                    Password{' '}
+                  </label>
+                  
+                </div>
+                <div className="mt-2">
+                  <input
+                    className="flex h-10 w-full rounded-md dark:text-white border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    type="password"
+                    placeholder="Password"
+                  ></input>
+                </div>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="inline-flex w-full items-center justify-center border-2 border-white bg-black  font-semibold leading-7 text-black bg-gradient-to-br from-[#ff911b] dark:from-[#ff8400] dark:via-[#fff4f4] via-[#fff] dark:text-black  text-border2 to-[#43ff36] dark:to-[#12ff02] rounded px-3.5 py-2.5 hover:bg-black/80"
+                >
+                  Get started <FaArrowRightLong className="ml-2" size={16} />
+                </button>
+              </div>
+            </div>
+          </form>
+         
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Login
