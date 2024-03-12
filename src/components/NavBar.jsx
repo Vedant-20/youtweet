@@ -5,12 +5,13 @@ import logo from '../assets/logo.png'
 import { FaCircleUser } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
 
-function NavBar() {
+function NavBar({uid}) {
   return (
     <div className='mybg bg-transparent py-4 px-4 block w-full top-0 '>
+    
         <div className="container">
             <div className='flex justify-between items-center'>
-                <Link to={'/'}>
+                <Link to={`/home/${uid}`}>
                   <div className='cursor-pointer flex justify-center items-center '>
                     <img src={logo} className='h-[50px]' alt='logo'/>
                     <h2 className='dark:text-lime-300 text-black text-center font-bold ml-2 underline'>YouTweet</h2>
@@ -22,7 +23,7 @@ function NavBar() {
                 <div className='cursor-pointer'>
                   <IoLogOutOutline color='red' size={50}/>
                 </div>
-                <Link to={`/userdashboard/7`}>
+                <Link to={`/userdashboard/${uid}`}>
                 <div className='cursor-pointer'>
                     <FaCircleUser color='lightgreen' size={50}/>
                 </div>

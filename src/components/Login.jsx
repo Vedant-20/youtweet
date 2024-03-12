@@ -1,10 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaArrowRightLong } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
+
 
 
 function Login() {
+  const navigate=useNavigate()
+  const {enqueueSnackbar}=useSnackbar()
+
+  const [formData, setFormData] = useState({
+    
+    email: '',
+    
+    password: '',
+  });
+
+
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, formData);
+      console.log(response)
+      if(response.status===200){
+        enqueueSnackbar(response.data.message,{
+          variant:'success',
+          anchorOrigin:{
+            vertical:'top',
+            horizontal:'center'
+          }
+        })
+      }
+      navigate(`/home/${response.data.data.user._id}`)
+
+
+
+      
+      
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
@@ -29,7 +74,7 @@ function Login() {
             
           </p>
           
-          <form action="#" method="POST" className="mt-8">
+          <form onSubmit={handleSubmit} className="mt-8">
             <div className="space-y-5">
               <div>
                 <label htmlFor="" className="text-base font-medium text-gray-900 dark:text-white ">
@@ -40,6 +85,9 @@ function Login() {
                   <input
                     className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="email"
+                    name='email'
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Email"
                   ></input>
                 </div>
@@ -55,14 +103,17 @@ function Login() {
                 <div className="mt-2">
                   <input
                     className="flex h-10 w-full rounded-md dark:text-white border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    value={formData.password}
+                    onChange={handleChange}
                     type="password"
+                    name='password'
                     placeholder="Password"
                   ></input>
                 </div>
               </div>
               <div>
                 <button
-                  type="button"
+                  type="submit"
                   className="inline-flex w-full items-center justify-center border-2 border-white bg-black  font-semibold leading-7 text-black bg-gradient-to-br from-[#ff911b] dark:from-[#ff8400] dark:via-[#fff4f4] via-[#fff] dark:text-black  text-border2 to-[#43ff36] dark:to-[#12ff02] rounded px-3.5 py-2.5 hover:bg-black/80"
                 >
                   Get started <FaArrowRightLong className="ml-2" size={16} />

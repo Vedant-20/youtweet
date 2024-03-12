@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowRightLong } from "react-icons/fa6";
-import logo from '../assets/logo.png'
+import logo from "../assets/logo.png";
+import { useSnackbar } from "notistack";
+import Loader from './Loader'
 
 function SignUp() {
+  const {enqueueSnackbar}=useSnackbar()
+  const navigate=useNavigate()
+  const [loading,setLoading]=useState(false)
   const [formData, setFormData] = useState({
     fullname: "",
     email: "",
@@ -33,18 +38,32 @@ function SignUp() {
       formDataToSend.append("avatar", formData.avatar);
       formDataToSend.append("coverImage", formData.coverImage);
 
-      const response = await axios.post("/api/register", formDataToSend);
+      setLoading(true)
+
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/register`, formDataToSend);
+      if(response.status===201){
+        enqueueSnackbar(response.data.message,{
+          variant:'success',
+          anchorOrigin:{
+            vertical:'top',
+            horizontal:'center'
+          }
+        })
+      }
+      setLoading(false)
+      console.log(response);
+      navigate(`/home`)
     } catch (error) {
       console.log(error);
     }
   };
 
-  return (
+  return loading ? (<Loader/>)  :  (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
         <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
           <div className="mb-2 flex justify-center">
-            <img src={logo} alt="logo" className="h-[120px]"/>
+            <img src={logo} alt="logo" className="h-[120px]" />
           </div>
           <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">
             Sign up to create account
@@ -81,7 +100,7 @@ function SignUp() {
             </div>
 
             <div>
-            <label
+              <label
                 htmlFor=""
                 className="text-base font-medium text-gray-900 dark:text-white "
               >
@@ -89,23 +108,21 @@ function SignUp() {
                 Email{" "}
               </label>
 
-            <div className="mt-2">
-            <input
-            className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-              type="email"
-              placeholder="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+              <div className="mt-2">
+                <input
+                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="email"
+                  placeholder="Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
-            </div>
-            
-            
 
             <div>
-            <label
+              <label
                 htmlFor=""
                 className="text-base font-medium text-gray-900 dark:text-white "
               >
@@ -113,53 +130,41 @@ function SignUp() {
                 Username{" "}
               </label>
 
-            <div className="mt-2">
-            <input
-            className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-              type="text"
-              placeholder="Username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
+              <div className="mt-2">
+                <input
+                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
-
-            </div>
-            
-            
-
-
 
             <div>
-
-            <label
+              <label
                 htmlFor=""
                 className="text-base font-medium text-gray-900 dark:text-white "
               >
                 {" "}
                 Password{" "}
               </label>
-            <div className="mt-2">
-            <input
-            className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+              <div className="mt-2">
+                <input
+                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
-            </div>
-            
-            
-
-
-
-              <div>
-
+            <div>
               <label
                 htmlFor=""
                 className="text-base font-medium text-gray-900 dark:text-white "
@@ -167,26 +172,19 @@ function SignUp() {
                 {" "}
                 Avatar{" "}
               </label>
-            <div className="mt-2">
-
-            <input
-            className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-              type="file"
-              name="avatar"
-              accept="image/*"
-              onChange={handleChange}
-              required
-            />
-
+              <div className="mt-2">
+                <input
+                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
-              </div>
-            
-            
-
-
-
-              <div>
+            <div>
               <label
                 htmlFor=""
                 className="text-base font-medium text-gray-900 dark:text-white "
@@ -194,34 +192,32 @@ function SignUp() {
                 {" "}
                 Cover Image{" "}
               </label>
-            <div className="mt-2">
-            <input
-            className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-              type="file"
-              name="coverImage"
-              accept="image/*"
-              onChange={handleChange}
-              required
-            />
+              <div className="mt-2">
+                <input
+                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  type="file"
+                  name="coverImage"
+                  accept="image/*"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
 
-              </div>
-              
-            
             <div className="mt-2 flex justify-center items-center">
-            <button
-                  type="button"
-                  className="border-2 border-white inline-flex w-full items-center justify-center bg-black  font-semibold leading-7 text-black bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded px-3.5 py-2.5 hover:bg-black/80"
-                >
-                  SignUp <FaArrowRightLong className="ml-2 text-center" size={16} />
-                </button>
+              <button
+                type="submit"
+                className="border-2 border-white inline-flex w-full items-center justify-center bg-black  font-semibold leading-7 text-black bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+              >
+                SignUp{" "}
+                <FaArrowRightLong className="ml-2 text-center" size={16} />
+              </button>
             </div>
-            
           </form>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 export default SignUp;
