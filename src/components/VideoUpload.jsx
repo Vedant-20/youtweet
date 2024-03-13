@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar'
 import axios from 'axios';
+import Loader from './Loader'
+import { useSnackbar } from 'notistack';
 
 function VideoUpload() {
     const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [videoFile, setVideoFile] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
+  const [loading,setLoading]=useState(false)
+  const {enqueueSnackbar}=useSnackbar()
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -27,22 +31,44 @@ function VideoUpload() {
     formData.append('thumbnail', thumbnail);
     console.log('Uplaod video form',formData)
 
-    // try {
-    //   const response = await axios.post('/api/video/upload', formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   });
+    try {
+      setLoading(true)
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/videos/publish-video`, formData, {
+        withCredentials:true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Video Upload',response)
+      console.log(response.data);
+      if(response.data.statusCode===200){
+          enqueueSnackbar(response.data.message,{
+            variant:'success',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+      }
 
-    //   console.log(response.data);
-    //   // Handle success, maybe redirect or show a success message
-    // } catch (error) {
-    //   console.error('Error uploading video:', error.response.data.message);
-    //   // Handle error, show error message to the user
-    // }
+      setLoading(false)
+    } catch (error) {
+      console.error('Error uploading video:', error.response.data.message);
+      enqueueSnackbar(error.message,{
+        variant:'warning',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
+    }
   };
 
-  return (
+  return loading ? (<Loader/>) : (
     <>
         <NavBar/>
         <div>

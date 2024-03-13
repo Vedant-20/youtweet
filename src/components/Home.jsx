@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { login ,logout} from '../store/authSlice'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import Card from './Card';
 import Tweet from './Tweet';
 import Loader from './Loader'
+import axios from 'axios';
 
 function Home() {
   const navigate=useNavigate()
@@ -14,26 +15,43 @@ function Home() {
   const [active,setActive]=useState('videos')
   const [showVideos,setShowVideos]=useState(true)
   const [loading,setLoading]=useState(false)
+  const [videoData,setVideoData]=useState([])
+  const [tweetData,setTweetData]=useState([])
 
-  const GetAllVideos=()=>{
+  const GetAllVideos=async()=>{
 
-    // console.log('Before stsus',loginStatus)
-    // dispatch(login())
-    // console.log('After sadsd',loginStatus)
+    
     setActive('videos')
     setShowVideos(true)
+    setLoading(true)
+    const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/videos/get-all-videos`)
+    console.log(response.data.data)
+    setVideoData(response.data.data)
+    setLoading(false)
+    console.log('Video Data All vsudbj',videoData)
 
   }
 
-  const GetAllTweets=()=>{
-    // dispatch(logout())
+  const GetAllTweets=async()=>{
+    
     setActive('tweets')
     setShowVideos(false)
+    setLoading(true)
+    const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/tweets/get-all-tweets`)
+    console.log(response.data.data)
+    setTweetData(response.data.data)
+    setLoading(false)
   }
 
   const SendToLogin=()=>{
     navigate(`/`)
   }
+
+
+  useEffect(()=>{
+    GetAllVideos()
+    
+  },[])
   return loginStatus ? (
     <>
       <div className='flex justify-evenly items-center mybgTab'>
@@ -51,9 +69,17 @@ function Home() {
           
           {showVideos ? (
             
-            <Card/>
+            videoData.map((video,index)=>(
+              <Card key={index} index={index} {...video}/>
+            ))
 
-          ) : (<Tweet/>)}
+          ) : (
+
+          tweetData.map((tweet,index)=>(
+            <Tweet key={index} index={index} {...tweet}/>
+          ))
+          
+          )}
           
       </div>
       </div>

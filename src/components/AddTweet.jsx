@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
 
 function AddTweet() {
     const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ function AddTweet() {
         
         
       });
+
+      const {enqueueSnackbar}=useSnackbar()
 
 
 
@@ -18,12 +22,32 @@ function AddTweet() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        // try {
-        //   const response = await axios.post('/api/register', formData);
-        //   console.log(response)
-        // } catch (error) {
-        //   console.log(error)
-        // }
+        try {
+          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/tweets/create-tweet`, formData,{
+            withCredentials:true
+          });
+          console.log(response)
+          enqueueSnackbar(response.data.message,{
+            variant:'success',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+        } catch (error) {
+          console.log(error)
+          enqueueSnackbar(response.data.message,{
+            variant:'error',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+        }
       };
   return (
     <>

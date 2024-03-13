@@ -14,7 +14,7 @@ const ThemeBtn = () => {
 
     const themeMode=useSelector((state)=>state.dark.themeMode)
 
-    console.log(themeMode)
+    // console.log(themeMode)
     const onChangeBtn=()=>{
         const newMode = themeMode === "light" ? "dark" : "light";
     dispatch(setMode(newMode));

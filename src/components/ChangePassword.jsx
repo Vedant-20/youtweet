@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar';
+import axios from 'axios';
+import { useSnackbar } from 'notistack';
 
 function ChangePassword() {
     const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ function ChangePassword() {
         
         newPassword: '',
       });
+
+      const {enqueueSnackbar}=useSnackbar()
     
     
     
@@ -18,12 +22,31 @@ function ChangePassword() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        // try {
-        //   const response = await axios.post('/api/register', formData);
-        //   console.log(response)
-        // } catch (error) {
-        //   console.log(error)
-        // }
+        try {
+          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/change-password`, formData,{withCredentials:true});
+          console.log(response)
+          enqueueSnackbar(response.data.message,{
+            variant:'success',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+          
+        } catch (error) {
+          console.log(error)
+          enqueueSnackbar(error,{
+            variant:'error',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+        }
       };
   return (
     <>

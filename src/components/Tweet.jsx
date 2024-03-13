@@ -1,23 +1,41 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { SlLike } from "react-icons/sl";
 import { SlDislike } from "react-icons/sl";
 
-function Tweet() {
+function Tweet({index,content,createdAt,owner}) {
+
+  const [tweetOwner,setTweetOwner]=useState({})
+  const GetOwnerById=async(owner)=>{
+    try {
+      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${owner}`,{withCredentials:true})
+      console.log('Tweet Owner Details Page Owner',response.data.data)
+      setTweetOwner(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    GetOwnerById(owner)
+  },[])
+
+
   return (
-    <div className='flex gap-3 border-b border-gray-700 py-4 mybg'>
+    <div className='w-full overflow-hidden flex gap-3 border-b border-gray-700 py-4 mybg'>
         <div className="h-14 w-14 shrink-0">
               <img
-                src="https://images.pexels.com/photos/1115816/pexels-photo-1115816.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="React Patterns"
+                src={tweetOwner?.avatar}
+                alt={tweetOwner?.fullname}
                 className="h-full w-full rounded-full" />
             </div>
     <div className='text-white w-full '>
         <h4 className="mb-1 flex items-center gap-x-2">
-                <span className="font-semibold">React Patterns</span>
+                <span className="font-semibold">{tweetOwner?.fullname}</span>
                  
-                <span className="inline-block text-sm text-gray-400">5 hours ago</span>
+                <span className="inline-block text-sm text-gray-400">{createdAt.split('T')[0]}</span>
               </h4>
-              <p className="mb-2">Exploring the latest features in JavaScript ES11! The language keeps evolving. 💡 #JavaScript #ES11 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quia, facilis assumenda maxime veritatis similique, alias in doloremque vel cumque sapiente aut et! Tempora perferendis architecto autem praesentium accusamus suscipit?</p>
+              <p className="mb-2">{content}</p>
               <div className='flex gap-4'>
               <button
                   className="group inline-flex items-center gap-x-1 outline-none after:content-[attr(data-like-count)] focus:after:content-[attr(data-like-count-alt)]"

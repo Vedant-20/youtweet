@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
 function UpdateAvatar() {
   const [formData, setFormData] = useState({ avatar: null });
+
+  const {enqueueSnackbar}=useSnackbar()
 
   const handleChange = (e) => {
     if (e.target.name === "avatar") {
@@ -19,9 +23,28 @@ function UpdateAvatar() {
 
       formDataToSend.append("avatar", formData.avatar);
 
-      //   const response = await axios.post("/api/register", formDataToSend);
+        const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/users/avatar`, formDataToSend);
+        console.log(response)
+        enqueueSnackbar(response.data.message,{
+          variant:'success',
+          autoHideDuration:1000,
+          anchorOrigin:{
+            
+            vertical:'top',
+            horizontal:'center'
+          }
+        })
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(response.data.message,{
+        variant:'error',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
     }
   };
   return (

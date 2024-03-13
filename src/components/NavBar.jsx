@@ -1,13 +1,57 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ThemeBtn from './ThemeBtn'
 import logo from '../assets/logo.png'
 import { FaCircleUser } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
+import axios from 'axios';
+import { logout ,IdKeeper} from '../store/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
-function NavBar({uid}) {
+function NavBar() {
+  const uid=useSelector((state)=>state.auth.userId)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const {enqueueSnackbar}=useSnackbar()
+
+  const handleLogOut=async()=>{
+    try {
+      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/logout`,{},{withCredentials:true,headers:{
+        'Content-Type':'application/json'
+      }})
+    console.log(response)
+    dispatch(logout())
+    dispatch(IdKeeper(null))
+    navigate(`/`)
+    if(response.status===200){
+      enqueueSnackbar(response.data.message,{
+        variant:'success',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
+    }
+    } catch (error) {
+      console.log('Logout Error',error)
+      enqueueSnackbar(error.message,{
+        variant:'warning',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
+    }
+    
+  }
   return (
     <div className='mybg bg-transparent py-4 px-4 block w-full top-0 '>
+    
     
         <div className="container">
             <div className='flex justify-between items-center'>
@@ -20,7 +64,7 @@ function NavBar({uid}) {
                 <div>
                     <ThemeBtn/>
                 </div>
-                <div className='cursor-pointer'>
+                <div className='cursor-pointer' onClick={handleLogOut}>
                   <IoLogOutOutline color='red' size={50}/>
                 </div>
                 <Link to={`/userdashboard/${uid}`}>

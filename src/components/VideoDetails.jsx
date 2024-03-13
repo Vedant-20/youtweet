@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import { SlLike } from "react-icons/sl";
 import { SlDislike } from "react-icons/sl";
+import { useParams } from "react-router-dom";
+import Loader from "./Loader";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function VideoDetails() {
+  const {videoId}=useParams()
+  const OwnerId=useSelector((state)=>state.video.OwnerId)
+    const [loading,setLoading]=useState(false)
+    
+    const [videoData,setVideoData]=useState({})
+    
+    const [videoOwner,setVideoOwner]=useState({})
     const [formData, setFormData] = useState({
     
         content: '',
@@ -25,16 +36,59 @@ function VideoDetails() {
         //   console.log(error)
         // }
       };
+
+      const GetVideoById=async(videoId)=>{
+        setLoading(true)
+        
+          
+        const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/videos/${videoId}`,{withCredentials:true})
+        console.log('Video Details',response.data.data)
+        setVideoData(response.data.data)
+        
+
+        setLoading(false)
+        
+      }
+
+      
+
+
+      useEffect(()=>{
+          GetVideoById(videoId)
+          
+            GetOwnerById(OwnerId)
+          
+            
+          
+          
+          
+      },[])
+
+
+      const GetOwnerById=async(user)=>{
+        try {
+          const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${OwnerId}`,{withCredentials:true})
+          console.log('Video Owner Details Page Owner',response.data.data)
+          setVideoOwner(response.data.data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      
   return (
     <>
       <NavBar />
+      
       <div className="w-full  flex flex-wrap justify-center items-center">
+      {/* <h1 className="text-7xl dark:text-white">{OwnerId}</h1> */}
+        {loading && <Loader/>}
         <video
           className="lg:h-[500px] mybgTab"
           autoPlay
           controls
-          controlslist="nodownload foobar"
-          src="https://res.cloudinary.com/dkl6osjli/video/upload/v1709707926/qcath1pjbu1c4oylwi1l.mp4"
+          controlsList="nodownload foobar"
+          
+          src={videoData?.videoFile}
         />
         {/* <div className='mt-4'>
                 <div >
@@ -55,21 +109,21 @@ function VideoDetails() {
         <div
           className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5"
           role="button"
-          tabindex="0"
+          tabIndex="0"
         >
           <div className="flex flex-wrap gap-y-2">
             <div className="w-full md:w-1/2 lg:w-full xl:w-1/2">
               <h1 className="text-lg font-bold text-black dark:text-white">
-                Advanced React Patterns
+                {videoData?.title}
               </h1>
               <p className="flex text-sm text-gray-200">
-                30,164 Views ·18 hours ago
+                {videoData?.views} Views ·{(videoData?.createdAt && videoData.createdAt.split('T')[0])}
               </p>
             </div>
 
-            <div class="w-full md:w-1/2 lg:w-full xl:w-1/2">
-              <div class="flex items-center justify-between gap-x-4 md:justify-end lg:justify-between xl:justify-end">
-                <div class="flex overflow-hidden rounded-lg border">
+            <div className="w-full md:w-1/2 lg:w-full xl:w-1/2">
+              <div className="flex items-center justify-between gap-x-4 md:justify-end lg:justify-between xl:justify-end">
+                <div className="flex overflow-hidden rounded-lg border">
                   <button
                     className="group inline-flex text-black dark:text-lime-300 items-center gap-x-1 outline-none after:content-[attr(data-like-count)] focus:after:content-[attr(data-like-count-alt)]"
                     data-like-count="425"
@@ -92,23 +146,19 @@ function VideoDetails() {
             <div className="flex items-center gap-x-4">
               <div className="mt-2 h-12 w-12 shrink-0">
                 <img
-                  src="https://images.pexels.com/photos/18264716/pexels-photo-18264716/free-photo-of-man-people-laptop-internet.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="reactpatterns"
+                  src={videoOwner?.avatar}
+                  alt={videoOwner?.fullname }
                   className="h-full w-full rounded-full"
                 />
               </div>
               <div className="block">
-                <p className="text-gray-200">React Patterns</p>
+                <p className="text-gray-200">{videoOwner?.fullname}</p>
                 <p className="text-sm text-gray-400">757K Subscribers</p>
               </div>
               <hr className="my-4 border-white" />
               <div className="h-5 overflow-hidden group-focus:h-auto">
                 <p className="text-sm text-black dark:text-white">
-                  🚀 Dive into the world of React with our latest tutorial
-                  series: &quot;Advanced React Patterns&quot;! 🛠️ Whether
-                  you&#x27;re a seasoned developer or just starting out, this
-                  series is designed to elevate your React skills to the next
-                  level.
+                  {videoData?.description}
                 </p>
               </div>
             </div>
@@ -135,8 +185,8 @@ function VideoDetails() {
             </div>
             <div className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
             <div>
-            <div class="flex gap-x-4">
-            <div class="mt-2 h-11 w-11 shrink-0">
+            <div className="flex gap-x-4">
+            <div className="mt-2 h-11 w-11 shrink-0">
                   <img
                     src="https://images.pexels.com/photos/18148932/pexels-photo-18148932/free-photo-of-woman-reading-book-on-a-bench.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                     alt="sarahjv"

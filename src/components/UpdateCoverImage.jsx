@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
+import axios from "axios";
 
 function UpdateCoverImage() {
 
@@ -20,9 +21,28 @@ function UpdateCoverImage() {
 
       formDataToSend.append("coverImage", formData.coverImage);
 
-      //   const response = await axios.post("/api/register", formDataToSend);
+        const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/users/cover-image`, formDataToSend,{withCredentials:true});
+        console.log(response)
+        enqueueSnackbar(response.data.message,{
+          variant:'success',
+          autoHideDuration:1000,
+          anchorOrigin:{
+            
+            vertical:'top',
+            horizontal:'center'
+          }
+        })
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(error,{
+        variant:'success',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
     }
   };
   return (

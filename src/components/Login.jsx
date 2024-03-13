@@ -4,10 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import { login,IdKeeper } from '../store/authSlice';
+import { useDispatch } from 'react-redux';
+import Cookies from 'js-cookie';
+
 
 
 
 function Login() {
+  const dispatch=useDispatch()
   const navigate=useNavigate()
   const {enqueueSnackbar}=useSnackbar()
 
@@ -30,15 +35,24 @@ function Login() {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, formData);
       console.log(response)
+      const {accessToken,refreshToken}=response.data.data
+      console.log('AccessToken',accessToken)
+      console.log('RefreshToken',refreshToken)
+      Cookies.set('accessToken', accessToken, { path: '/' });
+      Cookies.set('refreshToken', refreshToken, { path: '/' });
       if(response.status===200){
         enqueueSnackbar(response.data.message,{
           variant:'success',
+          autoHideDuration:1000,
           anchorOrigin:{
+            
             vertical:'top',
             horizontal:'center'
           }
         })
       }
+      dispatch(login())
+      dispatch(IdKeeper(response.data.data.user._id))
       navigate(`/home/${response.data.data.user._id}`)
 
 
