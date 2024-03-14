@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import NavBar from "./NavBar";
 import axios from "axios";
+import Loader from "./Loader";
+import { useSnackbar } from "notistack";
 
 function UpdateCoverImage() {
 
     const [formData, setFormData] = useState({ coverImage: null });
+    const [loading,setLoading]=useState(false)
+    const {enqueueSnackbar}=useSnackbar()
 
   const handleChange = (e) => {
     if (e.target.name === "coverImage") {
@@ -20,9 +24,11 @@ function UpdateCoverImage() {
       const formDataToSend = new FormData();
 
       formDataToSend.append("coverImage", formData.coverImage);
+      setLoading(true)
 
         const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/users/cover-image`, formDataToSend,{withCredentials:true});
         console.log(response)
+        setLoading(false)
         enqueueSnackbar(response.data.message,{
           variant:'success',
           autoHideDuration:1000,
@@ -34,7 +40,7 @@ function UpdateCoverImage() {
         })
     } catch (error) {
       console.log(error);
-      enqueueSnackbar(error,{
+      enqueueSnackbar(error.message,{
         variant:'success',
         autoHideDuration:1000,
         anchorOrigin:{
@@ -53,6 +59,7 @@ function UpdateCoverImage() {
           Change Your Cover Image
         </h1>
       </div>
+      {loading && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'><Loader/></div>}
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
         <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
           <form onSubmit={handleSubmit}>
@@ -78,7 +85,7 @@ function UpdateCoverImage() {
 
             <div className="mt-2 flex justify-center items-center">
               <button
-                type="button"
+                type="submit"
                 className="border-2 border-white inline-flex w-full items-center justify-center bg-black  font-semibold leading-7 text-black bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded px-3.5 py-2.5 hover:bg-black/80"
               >
                 Update Cover Image

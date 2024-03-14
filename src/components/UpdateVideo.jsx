@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar'
+import { useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import axios from 'axios';
+import Loader from './Loader'
 
 function UpdateVideo() {
     const [title, setTitle] = useState('');
+    const [loading,setLoading]=useState(false)
   const [description, setDescription] = useState('');
+  const {videoId}=useParams()
+  const {enqueueSnackbar}=useSnackbar()
   
   const [thumbnail, setThumbnail] = useState(null);
 
@@ -24,19 +31,39 @@ function UpdateVideo() {
     formData.append('thumbnail', thumbnail);
     console.log('Update video form',formData)
 
-    // try {
-    //   const response = await axios.post('/api/video/upload', formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   });
+    try {
+      setLoading(true)
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/videos/update-video/${videoId}`, formData, {
+        withCredentials:true,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-    //   console.log(response.data);
-    //   // Handle success, maybe redirect or show a success message
-    // } catch (error) {
-    //   console.error('Error uploading video:', error.response.data.message);
-    //   // Handle error, show error message to the user
-    // }
+      console.log(response);
+      setLoading(false)
+      enqueueSnackbar('Video Details Updated Successfully',{
+        variant:'success',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
+      
+    } catch (error) {
+      console.error('Error uploading video:', error.message);
+      enqueueSnackbar(error.message,{
+        variant:'error',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
+    }
   };
   return (
     <>
@@ -44,6 +71,7 @@ function UpdateVideo() {
         <div>
           <h1 className='text-black dark:text-white text-2xl font-bold text-center mb-4'>Update  Your Video Details</h1>
         </div>
+        {loading && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'><Loader/></div>}
         <div>
         <form onSubmit={handleSubmit}>
       <div className='text-center'>

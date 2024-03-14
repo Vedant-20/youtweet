@@ -6,88 +6,115 @@ import { useParams } from "react-router-dom";
 import Loader from "./Loader";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
 
 function VideoDetails() {
-  const {videoId}=useParams()
-  const OwnerId=useSelector((state)=>state.video.OwnerId)
-    const [loading,setLoading]=useState(false)
-    
-    const [videoData,setVideoData]=useState({})
-    
-    const [videoOwner,setVideoOwner]=useState({})
-    const [formData, setFormData] = useState({
-    
-        content: '',
-        
-        
+  const { videoId } = useParams();
+  const OwnerId = useSelector((state) => state.video.OwnerId);
+  const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [videoData, setVideoData] = useState({});
+  const [comments, setComments] = useState([]);
+
+  const [videoOwner, setVideoOwner] = useState({});
+  const [formData, setFormData] = useState({
+    content: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/comments/${videoId}`,
+        formData,
+        { withCredentials: true }
+      );
+      
+      enqueueSnackbar(response.data.message, {
+        variant: "success",
+        autoHideDuration: 1000,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
       });
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar(error.message, {
+        variant: "error",
+        autoHideDuration: 1000,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+      });
+    }
+  };
 
-      const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(formData)
-        // try {
-        //   const response = await axios.post('/api/register', formData);
-        //   console.log(response)
-        // } catch (error) {
-        //   console.log(error)
-        // }
-      };
+  const GetVideoById = async (videoId) => {
+    setLoading(true);
 
-      const GetVideoById=async(videoId)=>{
-        setLoading(true)
-        
-          
-        const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/videos/${videoId}`,{withCredentials:true})
-        console.log('Video Details',response.data.data)
-        setVideoData(response.data.data)
-        
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/videos/${videoId}`,
+      { withCredentials: true }
+    );
+    // console.log("Video Details", response.data.data);
+    setVideoData(response.data.data);
 
-        setLoading(false)
-        
-      }
+    setLoading(false);
+  };
 
-      
+  const GetVideoComments = async (videoId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/comments/${videoId}`,
+        { withCredentials: true }
+      );
+      console.log(response.data.data.docs);
+      setComments(response.data.data.docs)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    GetVideoById(videoId);
 
-      useEffect(()=>{
-          GetVideoById(videoId)
-          
-            GetOwnerById(OwnerId)
-          
-            
-          
-          
-          
-      },[])
+    GetOwnerById(OwnerId);
+    GetVideoComments(videoId);
+  }, []);
 
+  const GetOwnerById = async (OwnerId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${OwnerId}`,
+        { withCredentials: true }
+      );
+      // console.log("Video Owner Details Page Owner", response.data.data);
+      setVideoOwner(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-      const GetOwnerById=async(user)=>{
-        try {
-          const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${OwnerId}`,{withCredentials:true})
-          console.log('Video Owner Details Page Owner',response.data.data)
-          setVideoOwner(response.data.data)
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      
   return (
     <>
       <NavBar />
-      
+
       <div className="w-full  flex flex-wrap justify-center items-center">
-      {/* <h1 className="text-7xl dark:text-white">{OwnerId}</h1> */}
-        {loading && <Loader/>}
+        {/* <h1 className="text-7xl dark:text-white">{OwnerId}</h1> */}
+        {loading && <Loader />}
         <video
           className="lg:h-[500px] mybgTab"
           autoPlay
           controls
           controlsList="nodownload foobar"
-          
           src={videoData?.videoFile}
         />
         {/* <div className='mt-4'>
@@ -117,7 +144,8 @@ function VideoDetails() {
                 {videoData?.title}
               </h1>
               <p className="flex text-sm text-gray-200">
-                {videoData?.views} Views ·{(videoData?.createdAt && videoData.createdAt.split('T')[0])}
+                {videoData?.views} Views ·
+                {videoData?.createdAt && videoData.createdAt.split("T")[0]}
               </p>
             </div>
 
@@ -147,7 +175,7 @@ function VideoDetails() {
               <div className="mt-2 h-12 w-12 shrink-0">
                 <img
                   src={videoOwner?.avatar}
-                  alt={videoOwner?.fullname }
+                  alt={videoOwner?.fullname}
                   className="h-full w-full rounded-full"
                 />
               </div>
@@ -165,45 +193,55 @@ function VideoDetails() {
           </div>
         </div>
         <div>
-        <div
-            className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
-                
-              <h6 className="mb-4 font-semibold text-black dark:text-white">Add Comments</h6>
-              <form onSubmit={handleSubmit} >
+          <div className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
+            <h6 className="mb-4 font-semibold text-black dark:text-white">
+              Add Comments
+            </h6>
+            <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 className="w-full rounded-lg border bg-transparent px-2 py-1 text-black dark:text-white placeholder-white"
                 name="content"
                 value={formData.content}
                 onChange={handleChange}
-                placeholder="Add a Comment" />
-                <button className="border-2 text-2xl font-bold mt-4 mb-8 border-white inline-flex w-full items-center justify-center bg-black   leading-7 text-black bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded px-3.5 py-2.5 hover:bg-black/80" type="submit" >Add Comment</button>
-              </form>
-              
-            
+                placeholder="Add a Comment"
+              />
+              <button
+                className="border-2 text-2xl font-bold mt-4 mb-8 border-white inline-flex w-full items-center justify-center bg-black   leading-7 text-black bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded px-3.5 py-2.5 hover:bg-black/80"
+                type="submit"
+              >
+                Add Comment
+              </button>
+            </form>
+
             <hr className="my-4 border-white" />
-            </div>
-            <div className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
-            <div>
-            <div className="flex gap-x-4">
-            <div className="mt-2 h-11 w-11 shrink-0">
+          </div>
+          <div className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
+            {comments.map((comment,index)=>(
+              <div key={index}>
+              <div className="flex gap-x-4">
+                <div className="mt-2 h-11 w-11 shrink-0">
                   <img
-                    src="https://images.pexels.com/photos/18148932/pexels-photo-18148932/free-photo-of-woman-reading-book-on-a-bench.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                    alt="sarahjv"
-                    className="h-full w-full rounded-full" />
+                    src={comment?.avatar}
+                    alt={comment?.fullname}
+                    className="h-full w-full rounded-full"
+                  />
                 </div>
                 <div className="block">
                   <p className="flex items-center text-gray-200">
-                    Sarah Johnson · 
-                    <span className="text-sm">17 hour ago</span>
+                    {comment?.fullname} · 
+                    <span className="text-sm">{comment.createdAt.split('T')[0]}</span>
                   </p>
-                  <p className="text-sm text-gray-200">@sarahjv</p>
-                  <p className="mt-3 text-sm text-black dark:text-white">This series is exactly what I&#x27;ve been looking for! Excited to dive into these advanced React patterns. Thanks for putting this together!</p>
+                  <p className="text-sm text-gray-200">{comment?.username}</p>
+                  <p className="mt-3 text-sm text-black dark:text-white">
+                    {comment?.content}
+                  </p>
                 </div>
+              </div>
+              <hr className="my-4 border-white" />
             </div>
-            <hr className="my-4 border-white" />
-            </div>
-            </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

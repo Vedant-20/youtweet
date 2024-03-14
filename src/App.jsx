@@ -18,6 +18,7 @@ import UpdateName from "./components/UpdateName"
 import UpdateAvatar from "./components/UpdateAvatar"
 import UpdateCoverImage from "./components/UpdateCoverImage"
 import VideoDetails from "./components/VideoDetails"
+import ChannelPage from "./pages/ChannelPage"
 
 
 
@@ -58,6 +59,7 @@ useEffect(()=>{
       <Route path="/update-avatar" element={<UpdateAvatar/>}/>
       <Route path="/update-coverimage" element={<UpdateCoverImage/>}/>
       <Route path="/videoDetails/:videoId" element={<VideoDetails/>}/>
+      <Route path="/channel-page/:channelId" element={<ChannelPage/>}/>
     </Routes>
     <Footer/>
       

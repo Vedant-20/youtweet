@@ -1,5 +1,10 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar';
+import { useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import Loader from './Loader';
+import axios from 'axios';
+
 
 function UpdateTweet() {
     const [formData, setFormData] = useState({
@@ -8,6 +13,10 @@ function UpdateTweet() {
         
         
       });
+
+      const {tweetId}=useParams()
+      const [loading,setLoading]=useState(false)
+      const {enqueueSnackbar}=useSnackbar()
 
 
 
@@ -18,12 +27,32 @@ function UpdateTweet() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData)
-        // try {
-        //   const response = await axios.post('/api/register', formData);
-        //   console.log(response)
-        // } catch (error) {
-        //   console.log(error)
-        // }
+        try {
+          setLoading(true)
+          const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/tweets/${tweetId}`, formData,{withCredentials:true});
+          console.log(response)
+          setLoading(false)
+          enqueueSnackbar(response.data.message,{
+            variant:'success',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+        } catch (error) {
+          console.log(error)
+          enqueueSnackbar(error.message,{
+            variant:'error',
+            autoHideDuration:1000,
+            anchorOrigin:{
+              
+              vertical:'top',
+              horizontal:'center'
+            }
+          })
+        }
       };
   return (
     <>
@@ -33,6 +62,7 @@ function UpdateTweet() {
             <div>
                 <h1 className='text-black dark:text-white text-2xl font-bold text-center mb-4'>Update Tweet On Timeline</h1>
             </div>
+            {loading && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'><Loader/></div>}
             <div>
                 <form onSubmit={handleSubmit}>
                 <div className='text-center'>

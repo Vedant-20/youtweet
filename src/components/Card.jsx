@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { videoIdForDetails } from '../store/videoSlice';
 import { useDispatch } from 'react-redux';
@@ -9,12 +9,13 @@ function Card({index,title,description,duration,thumbnail,videoFile,_id,views,cr
 
   const [videoOwner,setVideoOwner]=useState({})
   const dispatch=useDispatch()
+  const navigate=useNavigate()
 
 
   const GetOwnerById=async(owner)=>{
     try {
       const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${owner}`)
-      console.log('Video Owner Details',response.data.data)
+      // console.log('Video Owner Details',response.data.data)
       setVideoOwner(response.data.data)
     } catch (error) {
       console.log(error)
@@ -24,7 +25,11 @@ function Card({index,title,description,duration,thumbnail,videoFile,_id,views,cr
 
   const SendVideoDetails=(owner)=>{
       dispatch(videoIdForDetails(owner))
-      console.log(owner)
+      // console.log(owner)
+  }
+
+  const NavigateToChannel=(ownerId)=>{
+      navigate(`/channel-page/${ownerId}`)
   }
 
   useEffect(()=>{
@@ -42,7 +47,7 @@ function Card({index,title,description,duration,thumbnail,videoFile,_id,views,cr
           
 
           <div className='mt-5 flex justify-center items-center '>
-          <div className="h-10 w-10 shrink-0">
+          <div className="h-10 w-10 shrink-0" onClick={()=>{NavigateToChannel(videoOwner._id)}}>
               <img
                 src={videoOwner?.avatar}
                 alt={videoOwner?.fullname}

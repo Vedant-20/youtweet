@@ -88,7 +88,7 @@ function ChannelVideos() {
             <p className='mt-2 text-white text-[14px]'>{video?.description}</p>
             </div>
             <div className='flex flex-col gap-4 cursor-pointer'>
-                <Link to={`/update/:videoId`}>
+                <Link to={`/update/${video?._id}`}>
                 <FaPencil color='yellow' size={30}/>
                 </Link>
                 
