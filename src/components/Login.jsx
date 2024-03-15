@@ -38,8 +38,8 @@ function Login() {
       const {accessToken,refreshToken}=response.data.data
       // console.log('AccessToken',accessToken)
       // console.log('RefreshToken',refreshToken)
-      Cookies.set('accessToken', accessToken, { path: '/' ,sameSite:'none'},);
-      Cookies.set('refreshToken', refreshToken, { path: '/' , sameSite:'none'});
+      Cookies.set('accessToken', accessToken, { path: '/' ,sameSite:'none', secure:true}, );
+      Cookies.set('refreshToken', refreshToken, { path: '/' , sameSite:'none', secure:true });
       if(response.status===200){
         enqueueSnackbar(response.data.message,{
           variant:'success',
