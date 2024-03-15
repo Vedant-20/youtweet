@@ -33,7 +33,7 @@ function Login() {
     e.preventDefault();
     
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, formData);
+      const response = await axios.post(`/api/v1/users/login`, formData);
       console.log(response)
       const {accessToken,refreshToken}=response.data.data
       // console.log('AccessToken',accessToken)
