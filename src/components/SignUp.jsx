@@ -65,13 +65,13 @@ function SignUp() {
           <div className="mb-2 flex justify-center">
             <img src={logo} alt="logo" className="h-[120px]" />
           </div>
-          <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">
+          <h2 className="text-center text-2xl font-bold leading-tight text-white dark:text-white">
             Sign up to create account
           </h2>
-          <p className="mt-2 text-center text-base text-gray-600">
+          <p className="mt-2 text-center text-base text-gray-900">
             Already have an account?{" "}
             <Link to={`/`}>
-              <span className="font-medium text-black dark:text-lime-300 transition-all duration-200 hover:underline">
+              <span className="font-medium text-white dark:text-lime-300 transition-all duration-200 hover:underline">
                 Sign In
               </span>
             </Link>
@@ -81,14 +81,14 @@ function SignUp() {
             <div>
               <label
                 htmlFor=""
-                className="text-base font-medium text-gray-900 dark:text-white "
+                className="text-base font-medium text-white dark:text-white "
               >
                 {" "}
                 Full Name{" "}
               </label>
               <div className="mt-2">
                 <input
-                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                   type="text"
                   placeholder="Full Name"
                   name="fullname"
@@ -102,7 +102,7 @@ function SignUp() {
             <div>
               <label
                 htmlFor=""
-                className="text-base font-medium text-gray-900 dark:text-white "
+                className="text-base font-medium text-white "
               >
                 {" "}
                 Email{" "}
@@ -110,7 +110,7 @@ function SignUp() {
 
               <div className="mt-2">
                 <input
-                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                   type="email"
                   placeholder="Email"
                   name="email"
@@ -124,7 +124,7 @@ function SignUp() {
             <div>
               <label
                 htmlFor=""
-                className="text-base font-medium text-gray-900 dark:text-white "
+                className="text-base font-medium text-white "
               >
                 {" "}
                 Username{" "}
@@ -132,7 +132,7 @@ function SignUp() {
 
               <div className="mt-2">
                 <input
-                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                   type="text"
                   placeholder="Username"
                   name="username"
@@ -146,14 +146,14 @@ function SignUp() {
             <div>
               <label
                 htmlFor=""
-                className="text-base font-medium text-gray-900 dark:text-white "
+                className="text-base font-medium text-white "
               >
                 {" "}
                 Password{" "}
               </label>
               <div className="mt-2">
                 <input
-                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                   type="password"
                   placeholder="Password"
                   name="password"
@@ -167,14 +167,14 @@ function SignUp() {
             <div>
               <label
                 htmlFor=""
-                className="text-base font-medium text-gray-900 dark:text-white "
+                className="text-base font-medium text-white "
               >
                 {" "}
                 Avatar{" "}
               </label>
               <div className="mt-2">
                 <input
-                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                   type="file"
                   name="avatar"
                   accept="image/*"
@@ -187,14 +187,14 @@ function SignUp() {
             <div>
               <label
                 htmlFor=""
-                className="text-base font-medium text-gray-900 dark:text-white "
+                className="text-base font-medium text-white  "
               >
                 {" "}
                 Cover Image{" "}
               </label>
               <div className="mt-2">
                 <input
-                  className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                   type="file"
                   name="coverImage"
                   accept="image/*"

@@ -18,7 +18,7 @@ function UserDashboardPage() {
     // GetUserById(uid)
     GetCurrentUser()
     
-  },[uid])
+  },[uid]) 
 
   const GetUserById=async(uid)=>{
     try {

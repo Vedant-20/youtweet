@@ -47,7 +47,7 @@ function Card({index,title,description,duration,thumbnail,videoFile,_id,views,cr
           
 
           <div className='mt-5 flex justify-center items-center '>
-          <div className="h-10 w-10 shrink-0" onClick={()=>{NavigateToChannel(videoOwner._id)}}>
+          <div className="h-10 w-10 cursor-pointer shrink-0" onClick={()=>{NavigateToChannel(videoOwner._id)}}>
               <img
                 src={videoOwner?.avatar}
                 alt={videoOwner?.fullname}

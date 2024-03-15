@@ -76,12 +76,24 @@ function VideoDetails() {
         `${import.meta.env.VITE_BACKEND_URL}/comments/${videoId}`,
         { withCredentials: true }
       );
-      console.log(response.data.data.docs);
+      // console.log(response.data.data.docs);
       setComments(response.data.data.docs)
     } catch (error) {
       console.log(error);
     }
   };
+
+  const HandleSubscription=async()=>{
+    try {
+      console.log('OwnerId',OwnerId)
+      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/subscriptions/channel/${OwnerId}`,{},{withCredentials:true})
+
+      console.log('Subscription Tggling',response)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   useEffect(() => {
     GetVideoById(videoId);
@@ -117,21 +129,7 @@ function VideoDetails() {
           controlsList="nodownload foobar"
           src={videoData?.videoFile}
         />
-        {/* <div className='mt-4'>
-                <div >
-                    <h1 className='text-black dark:text-white text-xl font-bold text-center'>Title</h1>
-                </div>
-                <div>
-                <h2 className='text-black dark:text-white text-xl font-bold text-center'>Description: </h2>
-                <p className='dark:text-white text-black text-sm'>Video Description Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam quaerat ducimus ratione ipsum distinctio voluptas vero possimus, voluptatem modi, maiores facilis consectetur tenetur alias obcaecati nisi soluta inventore optio temporibus beatae non a. Similique, ea excepturi earum nihil architecto voluptate.</p>
-
-                </div>
-                <div className='mt-4 text-center'>
-                    <p className='dark:text-white text-black text-sm'>Upload Date: <span>11/3/2024</span></p>
-                </div>
-                
-
-            </div> */}
+        
 
         <div
           className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5"
@@ -140,7 +138,7 @@ function VideoDetails() {
         >
           <div className="flex flex-wrap gap-y-2">
             <div className="w-full md:w-1/2 lg:w-full xl:w-1/2">
-              <h1 className="text-lg font-bold text-black dark:text-white">
+              <h1 className="text-lg font-bold text-white dark:text-white">
                 {videoData?.title}
               </h1>
               <p className="flex text-sm text-gray-200">
@@ -153,11 +151,11 @@ function VideoDetails() {
               <div className="flex items-center justify-between gap-x-4 md:justify-end lg:justify-between xl:justify-end">
                 <div className="flex overflow-hidden rounded-lg border">
                   <button
-                    className="group inline-flex text-black dark:text-lime-300 items-center gap-x-1 outline-none after:content-[attr(data-like-count)] focus:after:content-[attr(data-like-count-alt)]"
+                    className="group inline-flex text-white dark:text-lime-300 items-center gap-x-1 outline-none after:content-[attr(data-like-count)] focus:after:content-[attr(data-like-count-alt)]"
                     data-like-count="425"
                     data-like-count-alt="426"
                   >
-                    <SlLike color="lime" />
+                    <SlLike color="lime"  />
                   </button>
                   <button
                     className="group inline-flex text-black dark:text-lime-300 items-center gap-x-1 outline-none after:content-[attr(data-dislike-count)] focus:after:content-[attr(data-dislike-count-alt)]"
@@ -181,11 +179,14 @@ function VideoDetails() {
               </div>
               <div className="block">
                 <p className="text-gray-200">{videoOwner?.fullname}</p>
+                <button type="button" onClick={HandleSubscription} className="bg-transparent border-2 rounded-md p-2 mt-2 mb-2 border-white text-white">Subscribe</button>
                 <p className="text-sm text-gray-400">757K Subscribers</p>
               </div>
               <hr className="my-4 border-white" />
+              
               <div className="h-5 overflow-hidden group-focus:h-auto">
-                <p className="text-sm text-black dark:text-white">
+                
+                <p className="text-sm text-white text-ellipsis dark:text-white">
                   {videoData?.description}
                 </p>
               </div>
@@ -194,7 +195,7 @@ function VideoDetails() {
         </div>
         <div>
           <div className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
-            <h6 className="mb-4 font-semibold text-black dark:text-white">
+            <h6 className="mb-4 font-semibold text-white dark:text-white">
               Add Comments
             </h6>
             <form onSubmit={handleSubmit}>
@@ -233,7 +234,7 @@ function VideoDetails() {
                     <span className="text-sm">{comment.createdAt.split('T')[0]}</span>
                   </p>
                   <p className="text-sm text-gray-200">{comment?.username}</p>
-                  <p className="mt-3 text-sm text-black dark:text-white">
+                  <p className="mt-3 text-sm text-white dark:text-white">
                     {comment?.content}
                   </p>
                 </div>

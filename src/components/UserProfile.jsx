@@ -21,7 +21,7 @@ function UserProfile({userData}) {
           <div className="mr-auto inline-block">
             <h1 className="font-bold text-xl text-black dark:text-emerald-300">{userData?.data?.data?.fullname}</h1>
             <p className="text-sm text-gray-400">{userData?.data?.data?.username}</p>
-            <p className="text-sm text-gray-400">600k Subscribers · 220 Subscribed</p>
+            <p className="text-sm text-gray-400">{userData?.data?.data?.email}</p>
           </div>
 
             </div>

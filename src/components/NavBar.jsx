@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ThemeBtn from './ThemeBtn'
 import logo from '../assets/logo.png'
@@ -13,6 +13,7 @@ function NavBar() {
   const uid=useSelector((state)=>state.auth.userId)
   const dispatch=useDispatch()
   const navigate=useNavigate()
+  const [userData,setUserData]=useState({})
   const {enqueueSnackbar}=useSnackbar()
 
   const handleLogOut=async()=>{
@@ -49,6 +50,23 @@ function NavBar() {
     }
     
   }
+
+  const GetCurrentUser=async(uid)=>{
+    try {
+      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/current-user`,{withCredentials:true})
+      // console.log('Current USer',response.data.data)
+    setUserData(response.data.data)
+    // console.log(userData)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=>{
+    
+    GetCurrentUser()
+    
+  },[uid])
   return (
     <div className='mybg bg-transparent py-4 px-4 block w-full top-0 '>
     
@@ -68,8 +86,10 @@ function NavBar() {
                   <IoLogOutOutline color='red' size={50}/>
                 </div>
                 <Link to={`/userdashboard/${uid}`}>
-                <div className='cursor-pointer'>
-                    <FaCircleUser color='lightgreen' size={50}/>
+                <div className='rounded-full  cursor-pointer'>
+                    {/* <FaCircleUser color='lightgreen' size={50}/>
+                     */}
+                     <img className='rounded-full h-16 w-16 border-white border-2' src={userData?.avatar} alt={userData?.fullname} />
                 </div>
                 </Link>
                 

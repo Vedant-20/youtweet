@@ -71,16 +71,16 @@ function Login() {
           <div className="mb-2 flex justify-center">
             <img className='h-[180px]' src={logo} alt="logo" />
           </div>
-          <h2 className="text-center text-2xl font-bold leading-tight text-black dark:text-white">
+          <h2 className="text-center text-2xl font-bold leading-tight text-white dark:text-white">
             Sign in to your account
           </h2>
           
-          <p className="mt-2 text-center text-sm text-gray-600 ">
+          <p className="mt-2 text-center text-sm text-gray-900 ">
             Don&apos;t have an account?{' '}
             <Link
               to={`/signup`}
             >
-            <span className="font-semibold text-black transition-all duration-200 hover:underline dark:text-lime-300">
+            <span className="font-semibold text-white transition-all duration-200 hover:underline dark:text-lime-300">
             Create a free account
             </span>
             </Link>
@@ -91,13 +91,13 @@ function Login() {
           <form onSubmit={handleSubmit} className="mt-8">
             <div className="space-y-5">
               <div>
-                <label htmlFor="" className="text-base font-medium text-gray-900 dark:text-white ">
+                <label htmlFor="" className="text-base font-medium text-white dark:text-white ">
                   {' '}
                   Email address{' '}
                 </label>
                 <div className="mt-2">
                   <input
-                    className="flex h-10 w-full dark:text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-10 w-full text-white rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     type="email"
                     name='email'
                     value={formData.email}
@@ -108,7 +108,7 @@ function Login() {
               </div>
               <div>
                 <div className="flex items-center justify-between">
-                  <label htmlFor="" className="text-base font-medium text-gray-900 dark:text-white">
+                  <label htmlFor="" className="text-base font-medium text-white dark:text-white">
                     {' '}
                     Password{' '}
                   </label>
@@ -116,7 +116,7 @@ function Login() {
                 </div>
                 <div className="mt-2">
                   <input
-                    className="flex h-10 w-full rounded-md dark:text-white border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex h-10 w-full rounded-md text-white border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-yellow-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                     value={formData.password}
                     onChange={handleChange}
                     type="password"
