@@ -1,7 +1,7 @@
 {
   "name": "youtweet",
   "private": true,
-  "proxy":"https://youtube-backend-kegx.onrender.com",
+  
   "version": "0.0.0",
   "type": "module",
   "scripts": {

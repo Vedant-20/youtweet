@@ -32,7 +32,7 @@ function UserDashboardPage() {
   }
   const GetCurrentUser=async(uid)=>{
     try {
-      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/current-user`,{withCredentials:true})
+      const response=await axios.get(`/api/v1/users/current-user`,{withCredentials:true})
       // console.log('Current USer',response)
     setUserData(response)
     // console.log(userData)
