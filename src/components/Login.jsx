@@ -36,10 +36,10 @@ function Login() {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/login`, formData);
       console.log(response)
       const {accessToken,refreshToken}=response.data.data
-      console.log('AccessToken',accessToken)
-      console.log('RefreshToken',refreshToken)
-      Cookies.set('accessToken', accessToken, { path: '/' });
-      Cookies.set('refreshToken', refreshToken, { path: '/' });
+      // console.log('AccessToken',accessToken)
+      // console.log('RefreshToken',refreshToken)
+      Cookies.set('accessToken', accessToken, { path: '/' ,sameSite:'none'},);
+      Cookies.set('refreshToken', refreshToken, { path: '/' , sameSite:'none'});
       if(response.status===200){
         enqueueSnackbar(response.data.message,{
           variant:'success',

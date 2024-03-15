@@ -25,7 +25,7 @@ function Home() {
     setShowVideos(true)
     setLoading(true)
     const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/videos/get-all-videos`)
-    console.log(response.data.data)
+    // console.log(response.data.data)
     setVideoData(response.data.data)
     setLoading(false)
     console.log('Video Data All vsudbj',videoData)
@@ -38,7 +38,7 @@ function Home() {
     setShowVideos(false)
     setLoading(true)
     const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/tweets/get-all-tweets`)
-    console.log(response.data.data)
+    // console.log(response.data.data)
     setTweetData(response.data.data)
     setLoading(false)
   }
