@@ -15,6 +15,7 @@ function VideoDetails() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [videoData, setVideoData] = useState({});
+  const [isSubscribed,setIsSubscribed]=useState(false)
   const [comments, setComments] = useState([]);
 
   const [videoOwner, setVideoOwner] = useState({});
@@ -31,11 +32,11 @@ function VideoDetails() {
     console.log(formData);
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/comments/${videoId}`,
+        `/api/v1/comments/${videoId}`,
         formData,
         { withCredentials: true }
       );
-      
+
       enqueueSnackbar(response.data.message, {
         variant: "success",
         autoHideDuration: 1000,
@@ -60,10 +61,9 @@ function VideoDetails() {
   const GetVideoById = async (videoId) => {
     setLoading(true);
 
-    const response = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/videos/${videoId}`,
-      { withCredentials: true }
-    );
+    const response = await axios.get(`/api/v1/videos/${videoId}`, {
+      withCredentials: true,
+    });
     // console.log("Video Details", response.data.data);
     setVideoData(response.data.data);
 
@@ -72,28 +72,50 @@ function VideoDetails() {
 
   const GetVideoComments = async (videoId) => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/comments/${videoId}`,
-        { withCredentials: true }
-      );
+      const response = await axios.get(`/api/v1/comments/${videoId}`, {
+        withCredentials: true,
+      });
       // console.log(response.data.data.docs);
-      setComments(response.data.data.docs)
+      setComments(response.data.data.docs);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const HandleSubscription=async()=>{
+  const HandleSubscription = async () => {
     try {
-      console.log('OwnerId',OwnerId)
-      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/subscriptions/channel/${OwnerId}`,{},{withCredentials:true})
+      console.log("OwnerId", OwnerId);
+      const response = await axios.post(
+        `/api/v1/subscriptions/channel/${OwnerId}`,
+        {},
+        { withCredentials: true }
+      );
 
-      console.log('Subscription Tggling',response)
+      console.log("Subscription Tggling", response);
+      setIsSubscribed(response.data.data.isSubscribed)
+      console.log(isSubscribed)
+      enqueueSnackbar(response.data.message,{
+        variant:'success',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      enqueueSnackbar(error.message,{
+        variant:'error',
+        autoHideDuration:1000,
+        anchorOrigin:{
+          
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
     }
-
-  }
+  };
 
   useEffect(() => {
     GetVideoById(videoId);
@@ -105,7 +127,7 @@ function VideoDetails() {
   const GetOwnerById = async (OwnerId) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${OwnerId}`,
+        `/api/v1/users/get-userbyid/${OwnerId}`,
         { withCredentials: true }
       );
       // console.log("Video Owner Details Page Owner", response.data.data);
@@ -129,7 +151,6 @@ function VideoDetails() {
           controlsList="nodownload foobar"
           src={videoData?.videoFile}
         />
-        
 
         <div
           className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5"
@@ -155,7 +176,7 @@ function VideoDetails() {
                     data-like-count="425"
                     data-like-count-alt="426"
                   >
-                    <SlLike color="lime"  />
+                    <SlLike color="lime" />
                   </button>
                   <button
                     className="group inline-flex text-black dark:text-lime-300 items-center gap-x-1 outline-none after:content-[attr(data-dislike-count)] focus:after:content-[attr(data-dislike-count-alt)]"
@@ -179,13 +200,18 @@ function VideoDetails() {
               </div>
               <div className="block">
                 <p className="text-gray-200">{videoOwner?.fullname}</p>
-                <button type="button" onClick={HandleSubscription} className="bg-transparent border-2 rounded-md p-2 mt-2 mb-2 border-white text-white">Subscribe</button>
+                <button
+                  type="button"
+                  onClick={HandleSubscription}
+                  className={` ${isSubscribed ? 'bg-white/75 text-black font-bold' : 'bg-transparent text-white'} border-2 rounded-md p-2 mt-2 mb-2 border-white `}
+                >
+                  Subscribe
+                </button>
                 <p className="text-sm text-gray-400">757K Subscribers</p>
               </div>
               <hr className="my-4 border-white" />
-              
+
               <div className="h-5 overflow-hidden group-focus:h-auto">
-                
                 <p className="text-sm text-white text-ellipsis dark:text-white">
                   {videoData?.description}
                 </p>
@@ -218,29 +244,31 @@ function VideoDetails() {
             <hr className="my-4 border-white" />
           </div>
           <div className="group mb-4 w-full rounded-lg border p-4 duration-200 hover:bg-white/5 focus:bg-white/5">
-            {comments.map((comment,index)=>(
+            {comments.map((comment, index) => (
               <div key={index}>
-              <div className="flex gap-x-4">
-                <div className="mt-2 h-11 w-11 shrink-0">
-                  <img
-                    src={comment?.avatar}
-                    alt={comment?.fullname}
-                    className="h-full w-full rounded-full"
-                  />
+                <div className="flex gap-x-4">
+                  <div className="mt-2 h-11 w-11 shrink-0">
+                    <img
+                      src={comment?.avatar}
+                      alt={comment?.fullname}
+                      className="h-full w-full rounded-full"
+                    />
+                  </div>
+                  <div className="block">
+                    <p className="flex items-center text-gray-200">
+                      {comment?.fullname} · 
+                      <span className="text-sm">
+                        {comment.createdAt.split("T")[0]}
+                      </span>
+                    </p>
+                    <p className="text-sm text-gray-200">{comment?.username}</p>
+                    <p className="mt-3 text-sm text-white dark:text-white">
+                      {comment?.content}
+                    </p>
+                  </div>
                 </div>
-                <div className="block">
-                  <p className="flex items-center text-gray-200">
-                    {comment?.fullname} · 
-                    <span className="text-sm">{comment.createdAt.split('T')[0]}</span>
-                  </p>
-                  <p className="text-sm text-gray-200">{comment?.username}</p>
-                  <p className="mt-3 text-sm text-white dark:text-white">
-                    {comment?.content}
-                  </p>
-                </div>
+                <hr className="my-4 border-white" />
               </div>
-              <hr className="my-4 border-white" />
-            </div>
             ))}
           </div>
         </div>

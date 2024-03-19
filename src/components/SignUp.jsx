@@ -40,7 +40,7 @@ function SignUp() {
 
       setLoading(true)
 
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/register`, formDataToSend);
+      const response = await axios.post(`/api/v1/users/register`, formDataToSend);
       if(response.status===201){
         enqueueSnackbar(response.data.message,{
           variant:'success',

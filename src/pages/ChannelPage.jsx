@@ -22,7 +22,7 @@ function ChannelPage() {
   const GetUserById = async (uid) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${uid}`,
+        `/api/v1/users/get-userbyid/${uid}`,
         { withCredentials: true }
       );
       console.log("ndjalsncjsan fkls", response);
@@ -39,9 +39,7 @@ function ChannelPage() {
       
       
       const response = await axios.get(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/videos/get-video-by-channel-id/${channelId}`
+        `/api/v1/videos/get-video-by-channel-id/${channelId}`
       );
       console.log(response.data.data);
       setChannelVideos(response.data.data);
@@ -69,7 +67,7 @@ function ChannelPage() {
       
 
       const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/tweets/user/${channelId}`,
+        `/api/v1/tweets/user/${channelId}`,
         { withCredentials: true }
       );
       console.log(response.data.data);

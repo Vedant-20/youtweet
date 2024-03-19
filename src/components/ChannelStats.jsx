@@ -8,7 +8,7 @@ function ChannelStats() {
 
   const GetChannelStats=async()=>{
     try {
-      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/dashboard/stats`,{withCredentials:true,headers:{
+      const response=await axios.get(`/api/v1/dashboard/stats`,{withCredentials:true,headers:{
         'Content-Type':'application/json'
       }})
       console.log(response.data.data)

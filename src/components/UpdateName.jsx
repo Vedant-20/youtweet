@@ -22,7 +22,7 @@ function UpdateName() {
         e.preventDefault();
         console.log(formData)
         try {
-          const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/users/update-account`, formData,{withCredentials:true});
+          const response = await axios.patch(`/api/v1/users/update-account`, formData,{withCredentials:true});
           console.log(response)
           enqueueSnackbar(response.data.message,{
             variant:'success',

@@ -22,7 +22,7 @@ function UserDashboardPage() {
 
   const GetUserById=async(uid)=>{
     try {
-      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${uid}`)
+      const response=await axios.get(`/api/v1/users/get-userbyid/${uid}`)
       // console.log('ndjalsncjsan fkls',response)
     setUserData(response)
     // console.log(userData)

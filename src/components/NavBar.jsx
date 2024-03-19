@@ -18,7 +18,7 @@ function NavBar() {
 
   const handleLogOut=async()=>{
     try {
-      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/logout`,{},{withCredentials:true,headers:{
+      const response=await axios.post(`/api/v1/users/logout`,{},{withCredentials:true,headers:{
         'Content-Type':'application/json'
       }})
     console.log(response)
@@ -53,7 +53,7 @@ function NavBar() {
 
   const GetCurrentUser=async(uid)=>{
     try {
-      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/current-user`,{withCredentials:true})
+      const response=await axios.get(`/api/v1/users/current-user`,{withCredentials:true})
       // console.log('Current USer',response.data.data)
     setUserData(response.data.data)
     // console.log(userData)

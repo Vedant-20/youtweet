@@ -23,7 +23,7 @@ function ChangePassword() {
         e.preventDefault();
         console.log(formData)
         try {
-          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/change-password`, formData,{withCredentials:true});
+          const response = await axios.post(`/api/v1/users/change-password`, formData,{withCredentials:true});
           console.log(response)
           enqueueSnackbar(response.data.message,{
             variant:'success',

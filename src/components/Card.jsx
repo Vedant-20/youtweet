@@ -14,7 +14,7 @@ function Card({index,title,description,duration,thumbnail,videoFile,_id,views,cr
 
   const GetOwnerById=async(owner)=>{
     try {
-      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/users/get-userbyid/${owner}`)
+      const response=await axios.get(`/api/v1/users/get-userbyid/${owner}`)
       // console.log('Video Owner Details',response.data.data)
       setVideoOwner(response.data.data)
     } catch (error) {
