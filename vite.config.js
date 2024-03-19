@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server:{
     proxy:{
-      '/api':'https://youtube-backend-g0ub.onrender.com',
+      '/api':{
+        target:'https://youtube-backend-g0ub.onrender.com',
+        changeOrigin:true
+      }
       
     },
   },
