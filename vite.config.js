@@ -7,7 +7,14 @@ export default defineConfig({
     proxy:{
       '/api':{
         target:'https://youtube-backend-g0ub.onrender.com',
-        changeOrigin:true
+        changeOrigin:true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type, Authorization',
+          'Access-Control-Allow-Credentials': true
+        }
       }
       
     },
