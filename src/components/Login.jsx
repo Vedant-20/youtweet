@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack';
 import { login,IdKeeper } from '../store/authSlice';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
+import Loader from './Loader';
 
 
 
@@ -15,6 +16,7 @@ function Login() {
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const {enqueueSnackbar}=useSnackbar()
+  const [loading,setLoading]=useState(false)
 
   const [formData, setFormData] = useState({
     
@@ -33,6 +35,7 @@ function Login() {
     e.preventDefault();
     
     try {
+      setLoading(true)
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/login`, formData,{withCredentials:true});
       console.log(response)
       const {accessToken,refreshToken}=response.data.data
@@ -40,6 +43,7 @@ function Login() {
       // console.log('RefreshToken',refreshToken)
       Cookies.set('accessToken', accessToken, { path: '/' } );
       Cookies.set('refreshToken', refreshToken, { path: '/'  });
+      setLoading(false)
       if(response.status===200){
         enqueueSnackbar(response.data.message,{
           variant:'success',
@@ -64,7 +68,9 @@ function Login() {
     }
   };
 
-  return (
+  return loading ? (
+    <Loader/>
+  ) : (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
         <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
