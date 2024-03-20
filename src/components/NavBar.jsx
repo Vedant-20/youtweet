@@ -53,7 +53,7 @@ function NavBar() {
 
   const GetCurrentUser=async(uid)=>{
     try {
-      const response=await axios.get(`/api/v1/users/current-user`,{withCredentials:true})
+      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/current-user`,{withCredentials:true})
       // console.log('Current USer',response.data.data)
     setUserData(response.data.data)
     // console.log(userData)
