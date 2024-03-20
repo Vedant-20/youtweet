@@ -18,7 +18,7 @@ function ChannelVideos() {
 
     try {
       setLoading(true)
-      const response=await axios.get(`/api/v1/dashboard/channel-videos`,{withCredentials:true,headers:{
+      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/dashboard/channel-videos`,{withCredentials:true,headers:{
         'Content-Type':'application/json'
       }})
       console.log('Video Data Channel Videos',response.data.data)
@@ -36,7 +36,7 @@ function ChannelVideos() {
     const DeleteVideo=async(videoId)=>{
       try {
         setLoading(true)
-        const response=await axios.delete(`/api/v1/videos/delete-video/${videoId}`,{withCredentials:true})
+        const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/videos/delete-video/${videoId}`,{withCredentials:true})
         console.log('Video Delete',response)
         setLoading(false)
         enqueueSnackbar(response.data.message,{

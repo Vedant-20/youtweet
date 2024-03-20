@@ -33,7 +33,7 @@ function UpdateVideo() {
 
     try {
       setLoading(true)
-      const response = await axios.post(`/api/v1/videos/update-video/${videoId}`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/videos/update-video/${videoId}`, formData, {
         withCredentials:true,
         headers: {
           'Content-Type': 'multipart/form-data',

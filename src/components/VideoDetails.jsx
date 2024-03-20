@@ -32,7 +32,7 @@ function VideoDetails() {
     console.log(formData);
     try {
       const response = await axios.post(
-        `/api/v1/comments/${videoId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/comments/${videoId}`,
         formData,
         { withCredentials: true }
       );
@@ -61,7 +61,7 @@ function VideoDetails() {
   const GetVideoById = async (videoId) => {
     setLoading(true);
 
-    const response = await axios.get(`/api/v1/videos/${videoId}`, {
+    const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/videos/${videoId}`, {
       withCredentials: true,
     });
     // console.log("Video Details", response.data.data);
@@ -72,7 +72,7 @@ function VideoDetails() {
 
   const GetVideoComments = async (videoId) => {
     try {
-      const response = await axios.get(`/api/v1/comments/${videoId}`, {
+      const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/comments/${videoId}`, {
         withCredentials: true,
       });
       // console.log(response.data.data.docs);
@@ -86,7 +86,7 @@ function VideoDetails() {
     try {
       console.log("OwnerId", OwnerId);
       const response = await axios.post(
-        `/api/v1/subscriptions/channel/${OwnerId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/subscriptions/channel/${OwnerId}`,
         {},
         { withCredentials: true }
       );
@@ -127,7 +127,7 @@ function VideoDetails() {
   const GetOwnerById = async (OwnerId) => {
     try {
       const response = await axios.get(
-        `/api/v1/users/get-userbyid/${OwnerId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/users/get-userbyid/${OwnerId}`,
         { withCredentials: true }
       );
       // console.log("Video Owner Details Page Owner", response.data.data);

@@ -27,7 +27,7 @@ function UpdateAvatar() {
 
       setLoading(true)
 
-        const response = await axios.patch(`/api/v1/users/avatar`, formDataToSend,{withCredentials:true});
+        const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/avatar`, formDataToSend,{withCredentials:true});
         console.log(response)
         setLoading(false)
         enqueueSnackbar(response.data.message,{

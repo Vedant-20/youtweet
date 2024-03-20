@@ -18,7 +18,7 @@ function NavBar() {
 
   const handleLogOut=async()=>{
     try {
-      const response=await axios.post(`/api/v1/users/logout`,{},{withCredentials:true,headers:{
+      const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/logout`,{},{withCredentials:true,headers:{
         'Content-Type':'application/json'
       }})
     console.log(response)

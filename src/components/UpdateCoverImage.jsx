@@ -26,7 +26,7 @@ function UpdateCoverImage() {
       formDataToSend.append("coverImage", formData.coverImage);
       setLoading(true)
 
-        const response = await axios.patch(`/api/v1/users/cover-image`, formDataToSend,{withCredentials:true});
+        const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/cover-image`, formDataToSend,{withCredentials:true});
         console.log(response)
         setLoading(false)
         enqueueSnackbar(response.data.message,{

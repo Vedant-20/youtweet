@@ -23,7 +23,7 @@ function AddTweet() {
         e.preventDefault();
         console.log(formData)
         try {
-          const response = await axios.post(`/api/v1/tweets/create-tweet`, formData,{
+          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/tweets/create-tweet`, formData,{
             withCredentials:true
           });
           console.log(response)

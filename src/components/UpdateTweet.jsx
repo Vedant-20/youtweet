@@ -29,7 +29,7 @@ function UpdateTweet() {
         console.log(formData)
         try {
           setLoading(true)
-          const response = await axios.patch(`/api/v1/tweets/${tweetId}`, formData,{withCredentials:true});
+          const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/v1/tweets/${tweetId}`, formData,{withCredentials:true});
           console.log(response)
           setLoading(false)
           enqueueSnackbar(response.data.message,{

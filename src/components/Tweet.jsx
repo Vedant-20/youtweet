@@ -8,7 +8,7 @@ function Tweet({index,content,createdAt,owner}) {
   const [tweetOwner,setTweetOwner]=useState({})
   const GetOwnerById=async(owner)=>{
     try {
-      const response=await axios.get(`/api/v1/users/get-userbyid/${owner}`,{withCredentials:true})
+      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/get-userbyid/${owner}`,{withCredentials:true})
       // console.log('Tweet Owner Details Page Owner',response.data.data)
       setTweetOwner(response.data.data)
     } catch (error) {

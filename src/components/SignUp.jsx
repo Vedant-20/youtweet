@@ -40,7 +40,7 @@ function SignUp() {
 
       setLoading(true)
 
-      const response = await axios.post(`/api/v1/users/register`, formDataToSend);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/register`, formDataToSend);
       if(response.status===201){
         enqueueSnackbar(response.data.message,{
           variant:'success',
@@ -68,7 +68,7 @@ function SignUp() {
           <h2 className="text-center text-2xl font-bold leading-tight text-white dark:text-white">
             Sign up to create account
           </h2>
-          <p className="mt-2 text-center text-base text-gray-900">
+          <p className="mt-2 text-center text-base text-yellow-400">
             Already have an account?{" "}
             <Link to={`/`}>
               <span className="font-medium text-white dark:text-lime-300 transition-all duration-200 hover:underline">

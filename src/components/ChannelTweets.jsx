@@ -21,7 +21,7 @@ function ChannelTweets() {
     const GetChannelTweets=async(userId)=>{
       try {
         setLoading(true)
-        const response=await axios.get(`/api/v1/tweets/user/${userId}`,{withCredentials:true})
+        const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/tweets/user/${userId}`,{withCredentials:true})
         console.log(response.data.data)
         setTweets(response.data.data)
         setLoading(false)
@@ -35,7 +35,7 @@ function ChannelTweets() {
     const DeleteTweet=async(tweetId)=>{
       try {
         setLoading(true)
-        const response=await axios.delete(`/api/v1/tweets/${tweetId}`,{withCredentials:true})
+        const response=await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/tweets/${tweetId}`,{withCredentials:true})
         console.log(response)
         setLoading(false)
         enqueueSnackbar(response.data.message,{

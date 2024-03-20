@@ -33,7 +33,7 @@ function VideoUpload() {
 
     try {
       setLoading(true)
-      const response = await axios.post(`/api/v1/videos/publish-video`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/videos/publish-video`, formData, {
         withCredentials:true,
         headers: {
           'Content-Type': 'multipart/form-data',
