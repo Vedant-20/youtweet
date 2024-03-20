@@ -7,7 +7,7 @@ export default defineConfig({
     proxy:{
       '/api':{
         target:'https://youtube-backend-g0ub.onrender.com',
-        changeOrigin:true,
+        
        
       }
       
