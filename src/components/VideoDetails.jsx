@@ -126,7 +126,7 @@ function VideoDetails() {
 
     GetOwnerById(OwnerId);
     GetVideoComments(videoId);
-  }, [handleSubmit]);
+  }, []);
 
   const GetOwnerById = async (OwnerId) => {
     try {
