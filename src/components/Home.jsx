@@ -28,7 +28,7 @@ function Home() {
     // console.log(response.data.data)
     setVideoData(response.data.data)
     setLoading(false)
-    console.log('Video Data All vsudbj',videoData)
+    // console.log('Video Data All vsudbj',videoData)
 
   }
 
