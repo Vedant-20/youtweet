@@ -49,15 +49,15 @@ function UserDashboardPage() {
       <NavBar />
       
       <UserProfile userData={userData}/>
-      <div className="mybg m-auto">
+      <div className=" m-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <div className="mt-4 font-extrabold flex justify-center items-center ">
       <Link to={`/upload-video`}>
         <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           Upload Video{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center items-center " size={16} /> */}
         </button>
         </Link>
       </div>
@@ -65,10 +65,10 @@ function UserDashboardPage() {
       <Link to={`/add-tweet`}>
         <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           Add Tweet{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
         </Link>
       </div>
@@ -76,10 +76,10 @@ function UserDashboardPage() {
       <Link to={`/channel-stats`}>
         <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           See Your Channel Stats{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
         </Link>
       </div>
@@ -87,10 +87,10 @@ function UserDashboardPage() {
         <Link to={`/channel-videos`}>
         <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           See Your Videos{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
         </Link>
       </div>
@@ -98,10 +98,10 @@ function UserDashboardPage() {
         <Link to={`/channel-tweets`}>
         <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           See Your Tweets{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
         </Link>
       </div>
@@ -109,10 +109,10 @@ function UserDashboardPage() {
       <Link to={`/change-password`}>
       <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           Change Password{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
       </Link>
         
@@ -121,10 +121,10 @@ function UserDashboardPage() {
       <Link to={`/update-name`}>
       <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           Update Full Name and Email{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
       </Link>
         
@@ -133,10 +133,10 @@ function UserDashboardPage() {
       <Link to={`/update-avatar`}>
       <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400  border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           Update Avatar{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
 
       </Link>
@@ -146,10 +146,10 @@ function UserDashboardPage() {
       <Link to={`/update-coverimage`}>
       <button
           type="button"
-          className="border-2 border-white text-2xl inline-flex  items-center justify-center bg-black  font-bold leading-7 text-black bg-gradient-to-r from-yellow-200 to-green-500 rounded px-3.5 py-2.5 hover:bg-black/80"
+          className="border-2 h-[150px] w-[150px] bg-red-400 dark:bg-blue-400    border-white rounded-xl text-2xl   font-bold leading-7 text-white "
         >
           Update Cover Image{" "}
-          <FaArrowRightLong className="ml-2 text-center " size={16} />
+          {/* <FaArrowRightLong className="ml-2 text-center " size={16} /> */}
         </button>
       </Link>
         

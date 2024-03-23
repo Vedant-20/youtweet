@@ -117,12 +117,16 @@ function VideoDetails() {
     }
   };
 
+  const NavigateToChannel=()=>{
+    navigate(`/channel-page/${OwnerId}`)
+}
+
   useEffect(() => {
     GetVideoById(videoId);
 
     GetOwnerById(OwnerId);
     GetVideoComments(videoId);
-  }, []);
+  }, [handleSubmit]);
 
   const GetOwnerById = async (OwnerId) => {
     try {
@@ -191,13 +195,13 @@ function VideoDetails() {
           </div>
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center gap-x-4">
-              <div className="mt-2 h-12 w-12 shrink-0">
+              <div className="mt-2 h-12 w-12 shrink-0" onClick={()=>{NavigateToChannel(videoOwner._id)}}>
                 <img
                   src={videoOwner?.avatar}
                   alt={videoOwner?.fullname}
                   className="h-full w-full rounded-full"
                 />
-              </div>
+              </div> 
               <div className="block">
                 <p className="text-gray-200">{videoOwner?.fullname}</p>
                 <button

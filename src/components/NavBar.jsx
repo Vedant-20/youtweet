@@ -76,7 +76,7 @@ function NavBar() {
                 <Link to={`/home/${uid}`}>
                   <div className='cursor-pointer flex justify-center items-center '>
                     <img src={logo} className='h-[50px]' alt='logo'/>
-                    <h2 className='dark:text-lime-300 text-black text-center font-bold ml-2 underline'>YouTweet</h2>
+                    <h2 className='dark:text-lime-300 text-white text-center font-bold ml-2 underline'>YouTweet</h2>
                     </div>
                 </Link>
                 <div>
