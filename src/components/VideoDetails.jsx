@@ -229,7 +229,7 @@ function VideoDetails() {
             <h6 className="mb-4 font-semibold text-white dark:text-white">
               Add Comments
             </h6>
-            <form onSubmit={()=>{handleSubmit()}}>
+            <form onSubmit={()=>{handleSubmit}}>
               <input
                 type="text"
                 className="w-full rounded-lg border bg-transparent px-2 py-1 text-black dark:text-white placeholder-white"
