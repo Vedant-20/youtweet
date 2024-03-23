@@ -56,7 +56,7 @@ function SignUp() {
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error.message,{
-        variant:'success',
+        variant:'error',
         anchorOrigin:{
           vertical:'top',
           horizontal:'center'
