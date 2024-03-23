@@ -55,6 +55,13 @@ function SignUp() {
       navigate(`/`)
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(error.message,{
+        variant:'success',
+        anchorOrigin:{
+          vertical:'top',
+          horizontal:'center'
+        }
+      })
     }
   };
 
