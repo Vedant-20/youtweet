@@ -51,8 +51,8 @@ function SignUp() {
         })
       }
       setLoading(false)
-      console.log(response.data?.data?._id);
-      navigate(`/home/${response.data?.data?._id}`)
+      // console.log(response.data?.data?._id);
+      navigate(`/`)
     } catch (error) {
       console.log(error);
     }
