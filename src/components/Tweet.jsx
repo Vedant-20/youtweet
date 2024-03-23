@@ -2,10 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { SlLike } from "react-icons/sl";
 import { SlDislike } from "react-icons/sl";
+import { useNavigate } from 'react-router-dom';
 
 function Tweet({index,content,createdAt,owner}) {
 
   const [tweetOwner,setTweetOwner]=useState({})
+  const navigate=useNavigate()
   const GetOwnerById=async(owner)=>{
     try {
       const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/users/get-userbyid/${owner}`,{withCredentials:true})
@@ -16,6 +18,10 @@ function Tweet({index,content,createdAt,owner}) {
     }
   }
 
+  const NavigateToChannel=()=>{
+    navigate(`/channel-page/${tweetOwner?._id}`)
+  }
+
   useEffect(()=>{
     GetOwnerById(owner)
   },[])
@@ -23,7 +29,7 @@ function Tweet({index,content,createdAt,owner}) {
 
   return (
     <div className='w-full overflow-hidden flex gap-3 border-b border-gray-700 py-4 mybg'>
-        <div className="h-14 w-14 shrink-0">
+        <div className="h-14 w-14 shrink-0" onClick={()=>{NavigateToChannel(tweetOwner?._id)}}>
               <img
                 src={tweetOwner?.avatar}
                 alt={tweetOwner?.fullname}

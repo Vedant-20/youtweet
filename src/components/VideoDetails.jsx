@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import { SlLike } from "react-icons/sl";
 import { SlDislike } from "react-icons/sl";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -13,6 +13,7 @@ function VideoDetails() {
   const OwnerId = useSelector((state) => state.video.OwnerId);
   const [loading, setLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate=useNavigate()
 
   const [videoData, setVideoData] = useState({});
   const [isSubscribed,setIsSubscribed]=useState(false)
@@ -84,16 +85,16 @@ function VideoDetails() {
 
   const HandleSubscription = async () => {
     try {
-      console.log("OwnerId", OwnerId);
+      // console.log("OwnerId", OwnerId);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/subscriptions/channel/${OwnerId}`,
         {},
         { withCredentials: true }
       );
 
-      console.log("Subscription Tggling", response);
+      // console.log("Subscription Tggling", response);
       setIsSubscribed(response.data.data.isSubscribed)
-      console.log(isSubscribed)
+      // console.log(isSubscribed)
       enqueueSnackbar(response.data.message,{
         variant:'success',
         autoHideDuration:1000,
@@ -228,7 +229,7 @@ function VideoDetails() {
             <h6 className="mb-4 font-semibold text-white dark:text-white">
               Add Comments
             </h6>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={()=>{handleSubmit()}}>
               <input
                 type="text"
                 className="w-full rounded-lg border bg-transparent px-2 py-1 text-black dark:text-white placeholder-white"
