@@ -13,6 +13,7 @@ import { useSnackbar } from 'notistack';
 function ChannelTweets() {
 
     const [loading,setLoading]=useState(false)
+    const [error,setError]=useState(false)
     const [tweets,setTweets]=useState([])
     const {enqueueSnackbar}=useSnackbar()
     const userId=useSelector((state)=>state.auth.userId)
@@ -28,6 +29,7 @@ function ChannelTweets() {
         
       } catch (error) {
         console.log(error)
+        setError(true)
       }
     }
 
@@ -71,6 +73,9 @@ function ChannelTweets() {
         <div className="min-h-screen py-12 pt-12 overflow-hidden relative">
         
       {loading && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'><Loader/></div>}
+      {error && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'>
+        <h1 className='text-2xl text-white font-bold'>You Have Not Posted any Tweets Yet ☹!</h1>
+      </div>}
       <div className="flex flex-wrap lg:gap-8 justify-center">
       {tweets.map((tweet,index)=>(
         <div key={index} className='w-full flex gap-3 border-b border-gray-700 py-4 mybg'>

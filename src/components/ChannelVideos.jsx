@@ -11,6 +11,7 @@ import { useSnackbar } from 'notistack';
 function ChannelVideos() {
     const [loading,setLoading]=useState(false)
     const [videoData,setVideoData]=useState([])
+    const [error, setError]=useState(false)
     
     const {enqueueSnackbar}=useSnackbar()
 
@@ -24,8 +25,10 @@ function ChannelVideos() {
       console.log('Video Data Channel Videos',response.data.data)
       setVideoData(response.data.data)
       setLoading(false)
+      
     } catch (error) {
       console.log(error)
+      setError(true)
     }
       
       
@@ -71,6 +74,9 @@ function ChannelVideos() {
         <NavBar/>
         <div className="min-h-screen py-12 pt-12 overflow-hidden relative">
       {loading && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'><Loader/></div>}
+      {error && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'>
+        <h1 className='text-2xl text-white font-bold'>You Have Not Uploaded any Video Yet ☹!</h1>
+      </div>}
       <div className="flex flex-wrap lg:gap-8 justify-center">
      {videoData?.map((video,index)=>(
       <div key={index} className='mybg p-5 rounded-2xl sm:w-[360px] w-full'>
