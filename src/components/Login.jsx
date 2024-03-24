@@ -42,7 +42,7 @@ function Login() {
       // console.log('AccessToken',accessToken)
       // console.log('RefreshToken',refreshToken)
       Cookies.set('accessToken', accessToken, { path: '/' , secure:true, sameSite:'none', expires:7} );
-      Cookies.set('refreshToken', refreshToken, { path: '/' , secure:true , sameSite:none , expires:7,  });
+      Cookies.set('refreshToken', refreshToken, { path: '/' , secure:true , sameSite:'none' , expires:7,  });
       setLoading(false)
       if(response.status===200){
         enqueueSnackbar(response.data.message,{
