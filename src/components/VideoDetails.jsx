@@ -46,6 +46,8 @@ function VideoDetails() {
           horizontal: "center",
         },
       });
+
+      GetVideoComments(videoId)
     } catch (error) {
       console.log(error);
       enqueueSnackbar(error.message, {
@@ -78,6 +80,8 @@ function VideoDetails() {
       });
       // console.log(response.data.data.docs);
       setComments(response.data.data.docs);
+
+
     } catch (error) {
       console.log(error);
     }
