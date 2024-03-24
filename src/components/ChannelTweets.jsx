@@ -29,6 +29,7 @@ function ChannelTweets() {
         
       } catch (error) {
         console.log(error)
+        setLoading(false)
         setError(true)
       }
     }
@@ -74,7 +75,7 @@ function ChannelTweets() {
         
       {loading && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'><Loader/></div>}
       {error && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'>
-        <h1 className='text-2xl text-white font-bold'>You Have Not Posted any Tweets Yet ☹!</h1>
+        <h1 className='text-2xl text-white font-bold'>You Have Not Posted any Tweets Yet <span>☹</span>!</h1>
       </div>}
       <div className="flex flex-wrap lg:gap-8 justify-center">
       {tweets.map((tweet,index)=>(

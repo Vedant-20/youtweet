@@ -12,6 +12,7 @@ function ChannelPage() {
   const { channelId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const [userData, setUserData] = useState({});
+  const [error,setError]=useState(false)
   const [active, setActive] = useState("videos");
   const [loading, setLoading] = useState(false);
   const [channelVideos, setChannelVideos] = useState([]);
@@ -49,6 +50,8 @@ function ChannelPage() {
       setActive("videos");
     } catch (error) {
       console.log(error);
+      setLoading(false)
+      setError(true)
       enqueueSnackbar(error.message, {
         variant: "error",
         autoHideDuration: 1000,
@@ -79,6 +82,8 @@ function ChannelPage() {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false)
+      setError(true)
       enqueueSnackbar(error.message, {
         variant: "error",
         autoHideDuration: 1000,
@@ -138,6 +143,9 @@ function ChannelPage() {
             <Loader />
           </div>
         )}
+        {error && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'>
+        <h1 className='text-2xl text-white font-bold'>You Have Not Posted any Tweets or Videos Yet <span>☹</span>!</h1>
+      </div>}
         <div className="flex flex-wrap lg:gap-8 justify-center">
           {showVideos  && active === "videos" &&
             (
