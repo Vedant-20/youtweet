@@ -19,6 +19,9 @@ function ChannelPage() {
   const [channelTweets, setChannelTweets] = useState([]);
   const [showVideos, setShowVideos] = useState(true);
   const [showTweets, setShowTweets] = useState(false);
+  const [noChannelSubscribers,setNoChannelSubscribers]=useState(false)
+  const [subscribersCount,setSubscribersCount]=useState(0)
+  const [channelSubscribers,setChannelSubscribers]=useState([])
 
   const GetUserById = async (uid) => {
     try {
@@ -63,6 +66,20 @@ function ChannelPage() {
     }
   };
 
+  const GetChannelSubscribers=async()=>{
+    try {
+      const response=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/subscriptions/c/${channelId}`,
+      
+      { withCredentials: true })
+      console.log('Channel subscribers',response)
+      setSubscribersCount(response?.data?.data?.subscriberCount)
+      setChannelSubscribers(response?.data?.data?.subscribers)
+    } catch (error) {
+      console.log(error)
+      setNoChannelSubscribers(true)
+    }
+  }
+
   const GetChannelTweets = async (channelId) => {
     try {
       
@@ -99,12 +116,15 @@ function ChannelPage() {
     GetUserById(channelId);
     GetChannelVideos();
     GetChannelTweets(channelId)
+    GetChannelSubscribers(channelId)
   }, [channelId]);
   return (
     <>
       <NavBar />
 
-      <UserProfile userData={userData} />
+      <UserProfile userData={userData} subscribersCount={subscribersCount} />
+      
+      
       {loading && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none">
           <Loader />
@@ -163,6 +183,30 @@ function ChannelPage() {
             }
         </div>
       </div>
+
+      <div className="w-full flex ">
+      <div className="flex w-full justify-center items-center mb-8">
+        <h1 className="text-white text-3xl font-bold">Channel Subscribers</h1>
+        
+      </div>
+      <hr className="my-4 border-white" />
+      
+      </div>
+      <div className="m-auto grid grid-cols-3 md:grid-cols-6 lg:grid-cols-8">
+      {channelSubscribers?.map((subscriber)=>(
+        <div key={subscriber?._id} className="ml-4 mt-4 mb-4 font-bold flex flex-col justify-center items-center">
+              <img className="h-[100px] w-[100px] rounded-xl " src={subscriber?.subscriber?.avatar}/>
+              
+              <p className="text-sm mt-2 text-gray-400">{subscriber?.subscriber?.fullname}</p>
+              
+              
+            </div>
+      ))}
+
+      </div>
+            
+      
+      {noChannelSubscribers && <div><h1 className="text-4xl text-red-500">This Channel Do Not Have Any Subscriber 😥 </h1></div>}
     </>
   );
 }

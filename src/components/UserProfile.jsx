@@ -1,6 +1,6 @@
 import React from 'react'
 
-function UserProfile({userData}) {
+function UserProfile({userData, subscribersCount}) {
   return (
     <>
     <div className="relative min-h-[150px] w-full pt-[16.28%]">
@@ -19,9 +19,10 @@ function UserProfile({userData}) {
               className="h-full w-full" />
           </span>
           <div className="mr-auto inline-block">
-            <h1 className="font-bold text-xl text-black dark:text-emerald-300">{userData?.data?.data?.fullname}</h1>
+            <h1 className="font-bold text-xl text-white dark:text-emerald-300">{userData?.data?.data?.fullname}</h1>
             <p className="text-sm text-gray-400">{userData?.data?.data?.username}</p>
             <p className="text-sm text-gray-400">{userData?.data?.data?.email}</p>
+            <p className="text-sm text-gray-400">{subscribersCount} Subscribers</p>
           </div>
 
             </div>

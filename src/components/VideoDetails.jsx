@@ -214,7 +214,7 @@ function VideoDetails() {
                   onClick={HandleSubscription}
                   className={` ${isSubscribed ? 'bg-white/75 text-black font-bold' : 'bg-transparent text-white'} border-2 rounded-md p-2 mt-2 mb-2 border-white `}
                 >
-                  Subscribe
+                  Subscribe{`${isSubscribed ? 'd':''}`}
                 </button>
                 <p className="text-sm text-gray-400">757K Subscribers</p>
               </div>
