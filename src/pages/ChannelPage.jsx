@@ -163,7 +163,7 @@ function ChannelPage() {
             <Loader />
           </div>
         )}
-        {error && <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 sm:top-1/3 sm:left-1/3 sm:transform-none'>
+        {error && <div className=' sm:transform-none'>
         <h1 className='text-2xl text-white font-bold'>You Have Not Posted any Tweets or Videos Yet <span>☹</span>!</h1>
       </div>}
         <div className="flex flex-wrap lg:gap-8 justify-center">
@@ -189,6 +189,7 @@ function ChannelPage() {
         <h1 className="text-white text-3xl font-bold">Channel Subscribers</h1>
         
       </div>
+      {noChannelSubscribers && <div><h1 className="text-4xl text-red-500">This Channel Do Not Have Any Subscriber 😥 </h1></div>}
       <hr className="my-4 border-white" />
       
       </div>
@@ -206,7 +207,7 @@ function ChannelPage() {
       </div>
             
       
-      {noChannelSubscribers && <div><h1 className="text-4xl text-red-500">This Channel Do Not Have Any Subscriber 😥 </h1></div>}
+      
     </>
   );
 }
