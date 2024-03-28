@@ -26,6 +26,10 @@ function Login() {
   });
 
 
+  const GetTestCredentials=()=>{
+      setFormData({'email':'h@hc.com','password':'12345678'})
+      // console.log('Test Creds',formData)
+  }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -141,6 +145,14 @@ function Login() {
               </div>
             </div>
           </form>
+          <div className='mt-4' onClick={GetTestCredentials}>
+          <button
+                  type="button"
+                  className="inline-flex w-full items-center justify-center border-2 border-white bg-black  font-semibold leading-7 text-black bg-gradient-to-r from-teal-200 to-lime-200 rounded px-3.5 py-2.5 hover:bg-black/80"
+                >
+                  Get Test Credentials <FaArrowRightLong className="ml-2" size={16} />
+                </button>
+          </div>
          
         </div>
       </div>
